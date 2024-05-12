@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encryption and Decryption</title>
+</head>
+<body>
+
+<h2>Encriptacion y desencriptacion </h2>
+
+<label for="input">Enter text:</label><br>
+<textarea id="input" rows="4" cols="50"></textarea><br><br>
+
+<button onclick="encryptText()">Encriptar</button>
+<button onclick="decryptText()">Decriptar</button><br><br>
+
+<label for="output">Output:</label><br>
+<textarea id="output" rows="4" cols="50"></textarea>
+
+<script>
+// Función para cifrar un mensaje utilizando el Cifrado César
+function encrypt(message, shift) {
+    let encryptedMessage = "";
+    for (let i = 0; i < message.length; i++) {
+        let charCode = message.charCodeAt(i);
+        if (charCode >= 65 && charCode <= 90) {  // Si es una letra mayúscula
+            encryptedMessage += String.fromCharCode((charCode - 65 + shift) % 26 + 65);
+        } else if (charCode >= 97 && charCode <= 122) {  // Si es una letra minúscula
+            encryptedMessage += String.fromCharCode((charCode - 97 + shift) % 26 + 97);
+        } else {
+            encryptedMessage += message.charAt(i);  // Conservar otros caracteres sin cifrar
+        }
+    }
+    return encryptedMessage;
+}
+
+// Función para descifrar un mensaje cifrado utilizando el Cifrado César
+function decrypt(encryptedMessage, shift) {
+    let decryptedMessage = "";
+    for (let i = 0; i < encryptedMessage.length; i++) {
+        let charCode = encryptedMessage.charCodeAt(i);
+        if (charCode >= 65 && charCode <= 90) {  // Si es una letra mayúscula
+            decryptedMessage += String.fromCharCode((charCode - 65 - shift + 26) % 26 + 65);
+        } else if (charCode >= 97 && charCode <= 122) {  // Si es una letra minúscula
+            decryptedMessage += String.fromCharCode((charCode - 97 - shift + 26) % 26 + 97);
+        } else {
+            decryptedMessage += encryptedMessage.charAt(i);  // Conservar otros caracteres sin cifrar
+        }
+    }
+    return decryptedMessage;
+}
+
+// Función para encriptar el texto ingresado
+function encryptText() {
+    const inputText = document.getElementById("input").value;
+    const encryptedText = encrypt(inputText, 3); // Cifrado César con un desplazamiento de 3
+    document.getElementById("output").value = encryptedText;
+}
+
+// Función para desencriptar el texto ingresado
+function decryptText() {
+    const inputText = document.getElementById("output").value;
+    const decryptedText = decrypt(inputText, 3); // Descifrado César con un desplazamiento de 3
+    document.getElementById("input").value = decryptedText;
+}
+</script>
+
+</body>
+</html>
